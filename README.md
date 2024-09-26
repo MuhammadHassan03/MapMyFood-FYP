@@ -53,7 +53,6 @@ MapMyFood is a cutting-edge food mapping application built with modern web techn
 -------------------
 
 ### 1. Clone the Repository
-
     git clone https://github.com/yourusername/MapMyFood.git
     cd MapMyFood
 
