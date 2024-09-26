@@ -1,0 +1,27 @@
+{
+  "name": "mapmyfood",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "next": "cd frontend/next &&  npm run dev",
+    "server": "cd backend && nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "workspaces": [
+    "frontend/native",
+    "frontend/next",
+    "frontend/vite",
+    "frontend/electron",
+    "frontend/Shared",
+    "backend"
+  ],
+  "devDependencies": {
+    "electron": "^32.1.2"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}
