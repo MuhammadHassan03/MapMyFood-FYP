@@ -1,8 +1,8 @@
 const express = require('express');
-const { getAllTrains } = require('../services/trainServices/indes');
+const { getAllTrains } = require('../services/trainServices');
 
-const trainRoutes = express.Router;
+const trainRoutes = express.Router();
 
 trainRoutes.get('/getAllTrains', getAllTrains)
 
-export { trainRoutes }
+module.exports = {trainRoutes}

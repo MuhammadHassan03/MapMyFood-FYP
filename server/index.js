@@ -1,6 +1,6 @@
 // backend/src/index.js
 const express = require('express');
-const { trainRoutes } = require('./routes');
+const { trainRoutes } = require('./routes/trainRoutes');
 const app = express();
 const PORT = process.env.SERVERPORT || 5000;
 
