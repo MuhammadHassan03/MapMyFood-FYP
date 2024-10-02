@@ -5,7 +5,7 @@ import MapMyFoodLogo from 'Shared/assets/pictures/MapMyFoodLogo.png'
 import { HeaderLinks } from 'Shared/constants/hedaerLinks'
 
 
-const Header = () => {
+const Fottor = () => {
     return (
         <View
             style={{
@@ -14,10 +14,11 @@ const Header = () => {
                 justifyContent: 'space-between',
                 paddingLeft: 50,
                 paddingRight: 50,
+                paddingTop: 50,
+                paddingBottom: 50,
+                borderTopLeftRadius: 30,
+                borderTopRightRadius: 30,
                 backgroundColor: 'whitesmoke',
-                borderBottomLeftRadius: 30,
-                borderBottomRightRadius: 30,
-                marginBottom: 30
             }}
         >
             <View>
@@ -32,18 +33,19 @@ const Header = () => {
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}>
-                    {
+                    {/* {
                         HeaderLinks.map((link) => {
                             return (
-                                <Text style={{margin: 10, fontSize: 18}}>{link.title}</Text>
+                                <Text style={{margin: 10}}>{link.title}</Text>
                                 
                             )
                         })
-                    }
+                    } */}
+                    <Text style={{fontSize: 16}}>2024- Copyright by MapMyFood</Text>
                 </View>
             </View>
         </View>
     )
 }
 
-export { Header }
+export { Fottor }

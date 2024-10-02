@@ -3,10 +3,11 @@ const express = require('express');
 const { trainRoutes } = require('./routes/trainRoutes');
 const app = express();
 const PORT = process.env.SERVERPORT || 5000;
+const cors = require('cors');
 
 app.use(express.json());
+app.use(cors());
 
-// Define routes
 app.get('/', (req, res) => {
   res.send('Hello from the MapMyFood!');
 });
