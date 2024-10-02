@@ -13,7 +13,7 @@ const HeaderLinks = [
     },
     {
         title: 'Signup',
-        link: '/signup'
+        link: '/register'
     }
 ]
 
