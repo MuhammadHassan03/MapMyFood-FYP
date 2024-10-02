@@ -99,7 +99,7 @@ const LandingPage = () => {
 
 
             <View style={{ marginTop: 100, marginBottom: xs || sm || md ? 0 :  100 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'start', marginLeft: xs || sm || md ? 10 : 130, textAlign: xs || sm || md ? 'center' : 'normal' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'start', marginLeft: xs || sm || md ? 10 : 130, textAlign: xs || sm || md ? 'center' : undefined }}>
                     <Text style={{ fontSize: 20 }}>We deliver on these and more Railway Stations</Text>
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: 50, padding: 10 }}>
