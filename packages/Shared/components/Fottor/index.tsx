@@ -3,28 +3,32 @@ import React from 'react';
 import { Image, Text, View, } from "tamagui"
 import MapMyFoodLogo from 'Shared/assets/pictures/MapMyFoodLogo.png'
 import { HeaderLinks } from 'Shared/constants/hedaerLinks'
+import useResponsive from 'Shared/hooks/useResponsive';
+
 
 
 const Fottor = () => {
+    const {xs, sm ,md, lg } = useResponsive();
+
     return (
         <View
             style={{
-                flexDirection: 'row',
+                flexDirection: xs || sm || md ? 'column' :'row',
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 paddingLeft: 50,
                 paddingRight: 50,
-                paddingTop: 50,
-                paddingBottom: 50,
+                paddingTop: xs || sm || md ? 20 : 50,
+                paddingBottom: xs || sm || md ? 20 : 50,
                 borderTopLeftRadius: 30,
                 borderTopRightRadius: 30,
                 backgroundColor: 'whitesmoke',
             }}
         >
             <View>
-                <Image
+            <Image
                     source={{ uri: MapMyFoodLogo.src, }}
-                    style={{ width: 250, height: 100 }}
+                    style={{ width: xs ? 150 : 250, height:xs ? 50 : 100 }}
                 />
             </View>
             <View>

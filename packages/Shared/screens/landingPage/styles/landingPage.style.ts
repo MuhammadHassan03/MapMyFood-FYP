@@ -1,4 +1,7 @@
+import useResponsive from "Shared/hooks/useResponsive";
+
 const landingPageStyles = {
+
     mainContainer: {
         flexDirection: 'row' as 'row',
         alignItems: 'center' as 'center',
@@ -12,7 +15,7 @@ const landingPageStyles = {
         flexDirection: 'row' as 'row',
         gap: 10,
     },
-    
+
 };
 
-export {landingPageStyles}
+export { landingPageStyles }
