@@ -1,7 +1,7 @@
 // 'use client'
 import React from 'react';
 import { Button, Form, Image, Input, ScrollView, Text, View } from 'tamagui';
-import landingPageStyles from './styles/landingPage.style';
+import { landingPageStyles } from './styles/landingPage.style';
 import MapMyFood from '../../assets/pictures/MapMyFood.png';
 import FamilyMeal from 'Shared/assets/pictures/MealFood.png'
 import { Cities } from 'Shared/constants/cities'

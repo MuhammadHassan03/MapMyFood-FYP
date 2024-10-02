@@ -1,13 +1,15 @@
 'use client';
 
-import LandingPage from 'Shared/screens/landingPage'
-import { View } from 'tamagui';
-import { NextRoutes } from './routes';
-export default function Home() {
+import LandingPage from 'Shared/screens/landingPage';
+import { Layout } from './Layout'; // Adjust the path accordingly
+
+const HomePage = () => {
   return (
-    <View>
-      {/* <LandingPage></LandingPage> */}
-      <NextRoutes></NextRoutes>
-    </View>
+    <Layout>
+      <LandingPage />
+    </Layout>
   );
-}
+};
+
+export default HomePage;
+
