@@ -21,6 +21,7 @@ const LandingPage = () => {
                 justifyContent: 'space-evenly' as 'space-evenly',
                 // flexWrap: 'wrap',
             }}>
+                
                 <View style={{
                     flexDirection: 'column' as 'column',
                     gap: 30,
