@@ -1,10 +1,15 @@
 'use client';
 
-import LandingPage from 'Shared/screens/landingPage'
-export default function Home() {
+import LandingPage from 'Shared/screens/landingPage';
+import { Layout } from './Layout'; // Adjust the path accordingly
+
+const HomePage = () => {
   return (
-    <div>
-      <LandingPage></LandingPage>
-    </div>
+    <Layout>
+      <LandingPage />
+    </Layout>
   );
-}
+};
+
+export default HomePage;
+
