@@ -9,11 +9,11 @@ const HeaderLinks = [
     },
     {
         title: 'Login',
-        link: '/login'
+        link: '/auth'
     },
     {
         title: 'Signup',
-        link: '/register'
+        link: '/auth'
     }
 ]
 

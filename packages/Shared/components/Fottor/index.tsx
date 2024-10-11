@@ -13,6 +13,7 @@ const Fottor = () => {
     return (
         <View
             style={{
+                width: '100%',
                 flexDirection: xs || sm || md ? 'column' :'row',
                 alignItems: 'center',
                 justifyContent: 'space-between',
@@ -23,6 +24,7 @@ const Fottor = () => {
                 borderTopLeftRadius: 30,
                 borderTopRightRadius: 30,
                 backgroundColor: 'whitesmoke',
+                
             }}
         >
             <View>

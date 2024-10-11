@@ -4,11 +4,12 @@ import { Image, Text, View, } from "tamagui"
 import MapMyFoodLogo from 'Shared/assets/pictures/MapMyFoodLogo.png'
 import { HeaderLinks } from 'Shared/constants/hedaerLinks'
 import useResponsive from 'Shared/hooks/useResponsive';
+import Link from 'Shared/components/Link'
 
 
 const Header = () => {
 
-    const {xs, sm ,md, lg } = useResponsive();
+    const { xs, sm, md, lg } = useResponsive();
     return (
         <View
             style={{
@@ -28,7 +29,7 @@ const Header = () => {
             <View>
                 <Image
                     source={{ uri: MapMyFoodLogo.src, }}
-                    style={{ width: xs ? 150 : 250, height:xs ? 50 : 100 }}
+                    style={{ width: xs ? 150 : 250, height: xs ? 50 : 100 }}
                 />
             </View>
             <View>
@@ -37,11 +38,11 @@ const Header = () => {
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}>
-                     {
+                    {
                         HeaderLinks.map((link) => (
-                            <Text key={link.title} style={{ margin: 10, fontSize: xs || sm || md ? 16 : 18 }}>
+                            <Link href={link.link}><Text key={link.title} style={{ margin: 10, fontSize: xs || sm || md ? 16 : 18 }}>
                                 {link.title}
-                            </Text>
+                            </Text></Link>
                         ))
                     }
                 </View>

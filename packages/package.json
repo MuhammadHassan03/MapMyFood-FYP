@@ -9,6 +9,7 @@
   "dependencies": {
     "@tamagui/config": "^1.112.7",
     "axios": "^1.7.7",
+    "dotenv": "^16.4.5",
     "react-native-vector-icons": "^10.2.0",
     "tamagui": "^1.112.1"
   }

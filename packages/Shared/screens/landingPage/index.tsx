@@ -6,7 +6,8 @@ import MapMyFood from '../../assets/pictures/MapMyFood.png';
 import FamilyMeal from 'Shared/assets/pictures/MealFood.png'
 import { Cities } from 'Shared/constants/cities'
 import { FAQS } from 'Shared/constants/faqs'
-import useResponsive from 'Shared/hooks/useResponsive'
+import useResponsive from 'Shared/hooks/useResponsive';
+
 
 const LandingPage = () => {
 

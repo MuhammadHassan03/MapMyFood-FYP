@@ -1,20 +1,21 @@
-// backend/src/index.js
 const express = require('express');
-const { trainRoutes } = require('./routes/trainRoutes');
 const app = express();
-const PORT = process.env.SERVERPORT || 5000;
 const cors = require('cors');
+const connectDB = require('./services/db');
+const { authRouter } = require('./routes/authroutes');
+const { trainRoutes } = require('./routes/trainRoutes')
 
+require('dotenv').config()
 app.use(express.json());
 app.use(cors());
 
-app.get('/', (req, res) => {
-  res.send('Hello from the MapMyFood!');
-});
 
+connectDB();
+app.use('/api/auth', authRouter);
 app.use('/api/train', trainRoutes);
 
-// Start server
+const PORT = 6000
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
