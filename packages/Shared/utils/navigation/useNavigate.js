@@ -1,7 +1,6 @@
-// Shared/utils/navigate.js
 import { useRouter } from 'next/router';
 
-export const useNavigate = () => {
+const useNavigate = () => {
     const router = useRouter();
 
     const navigate = (path) => {
@@ -10,3 +9,5 @@ export const useNavigate = () => {
 
     return navigate;
 };
+
+export default useNavigate;

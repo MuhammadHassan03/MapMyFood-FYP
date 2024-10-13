@@ -6,11 +6,17 @@ import { HeaderLinks } from 'Shared/constants/hedaerLinks'
 import useResponsive from 'Shared/hooks/useResponsive';
 import Link from 'Shared/components/Link'
 import useAuth from 'Shared/hooks/Auth/useAuth';
-
+import useStorage from 'Shared/hooks/User/useStorage';
 
 const Header = () => {
+    const { logout } = useStorage();
+
 
     //TODO Implement Forgot Logic
+    const handleLogout = () => {
+        logout();
+
+    }
 
     const { xs, sm, md, lg } = useResponsive();
     const { user } = useAuth();
@@ -45,9 +51,11 @@ const Header = () => {
                     {
                         user ? (
                             HeaderLinks.loggedIn.map((link) => (
-                                <Link href={link.link}><Text key={link.title} style={{ margin: 10, fontSize: xs || sm || md ? 16 : 18 }}>
-                                    {link.title}
-                                </Text></Link>
+                                <Link href={link.link} onClick={link.title === 'Logout' ? handleLogout : null}>
+                                    <Text key={link.title} style={{ margin: 10, fontSize: xs || sm || md ? 16 : 18 }}>
+                                        {link.title}
+                                    </Text>
+                                </Link>
                             ))
                         ) : (
                             HeaderLinks.loggedOut.map((link) => (

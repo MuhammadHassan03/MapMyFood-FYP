@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
   username: {
     type: String,
     required: true,
@@ -25,6 +21,38 @@ const userSchema = new mongoose.Schema({
     enum: ['user', 'delivery_boy', 'restaurant'],
     default: 'user',
   },
+  name: {
+    type: String,
+  },
+  city: {
+    type: String,
+  },
+  phoneNumber: {
+    type: String,
+  },
+  location: {
+    type: String,
+  },
+  nearestRailwayStation: {
+    type: String,
+  },
+  openingTime: {
+    type: String,
+  },
+  closingTime: {
+    type: String,
+  },
+  age: {
+    type: Number,
+  },
+  vehicleType: {
+    type: String,
+    enum: ['bike', 'car'],
+  },
+  vehicleNumber: {
+    type: Number,
+    unique: true,
+  }
 });
 
 userSchema.pre('save', async function (next) {

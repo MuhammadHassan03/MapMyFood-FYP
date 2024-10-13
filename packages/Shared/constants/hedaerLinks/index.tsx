@@ -9,6 +9,10 @@ const HeaderLinks = {
             link: '/about'
         },
         {
+            title: 'Profile',
+            link: '/profile'
+        },
+        {
             title: 'Logout',
             link: '/'
         }
