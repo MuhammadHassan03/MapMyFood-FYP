@@ -1,3 +1,5 @@
-export default function APIURL() {
-    return process.env.SERVERURL || 'http://localhost:6000/api';
-}
+const APIURL = () => {
+    const API = process.env.SERVERURL || 'http://localhost:8000/api';
+    return { API };}
+
+export { APIURL }

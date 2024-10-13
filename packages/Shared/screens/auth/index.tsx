@@ -1,160 +1,162 @@
-import { Button, Form, Input, ScrollView, Separator, Text, ToggleGroup, View } from 'tamagui';
-import useStorage from 'Shared/hooks/User/useStorage';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
+import { Button, Input, ScrollView, Separator, Text, ToggleGroup, View } from 'tamagui';
 import { FormCard } from 'Shared/screens/auth/components/FormCard';
-import {useLogin} from 'Shared/screens/auth/hooks/useLogin';
+import { useSignup } from 'Shared/screens/auth/hooks/useSignup';
+import { useLogin } from 'Shared/screens/auth/hooks/useLogin';
+
+const InputField = React.memo(({ label, value, onChange, secureTextEntry }) => (
+    <View style={{ width: '100%' }}>
+        <Text style={{ width: '100%', textAlign: 'left' }}>{label}</Text>
+        <Input
+            style={{ width: '100%' }}
+            value={value}
+            onChangeText={onChange}
+            secureTextEntry={secureTextEntry}
+            autoCapitalize="none"
+            autoCorrect={false}
+        />
+    </View>
+));
+
+const RoleToggle = React.memo(({ role, onChange }) => (
+    <View style={{ width: '100%' }}>
+        <Text style={{ width: '100%', textAlign: 'left' }}>Role</Text>
+        <ToggleGroup
+            type="single"
+            value={role}
+            onValueChange={onChange}
+            style={{
+                color: 'black',
+                alignItems: 'center',
+                justifyContent: 'space-around',
+                width: '100%',
+            }}
+        >
+            <ToggleGroup.Item style={{ margin: 10 }} value="user">User</ToggleGroup.Item>
+            <ToggleGroup.Item style={{ margin: 10 }} value="delivery_boy">Delivery Boy</ToggleGroup.Item>
+            <ToggleGroup.Item style={{ margin: 10 }} value="restaurant">Restaurant</ToggleGroup.Item>
+        </ToggleGroup>
+    </View>
+));
+
+const SignupForm = React.memo(({ formData, handleChange, onSubmit, setAuthState, error }) => (
+    <FormCard>
+        <View style={{ width: '100%' }}>
+            {/* Using View instead of Form to avoid form submission triggering page reload */}
+            <View
+                style={{ width: '100%' }}
+                borderWidth={1}
+                borderRadius={30}
+                alignItems="center"
+                gap="$2"
+                padding="$8"
+            >
+                <InputField label="Full Name" value={formData.name} onChange={handleChange('name')} />
+                <InputField label="Email" value={formData.email} onChange={handleChange('email')} />
+                <InputField label="Username" value={formData.username} onChange={handleChange('username')} />
+                <InputField label="Password" value={formData.password} onChange={handleChange('password')} secureTextEntry />
+                <InputField label="Confirm Password" value={formData.confirmPassword} onChange={handleChange('confirmPassword')} secureTextEntry />
+                <RoleToggle role={formData.role} onChange={handleChange('role')} />
+                <Button onPress={onSubmit} style={{ width: '100%' }}>Submit</Button>
+                <Separator alignSelf="stretch" vertical marginHorizontal={15} />
+                <View style={{ width: '100%' }}>
+                    <Text onPress={() => setAuthState('login')} style={{ width: '100%', textAlign: 'center', cursor: 'pointer' }}>
+                        Already have an account? Login Here
+                    </Text>
+                </View>
+            </View>
+        </View>
+    </FormCard>
+));
+
+const LoginForm = React.memo(({ formData, handleChange, onSubmit, setAuthState, error }) => (
+    <FormCard>
+        <View style={{ width: '100%' }}>
+            <View
+                style={{ width: '100%' }}
+                borderWidth={1}
+                borderRadius={30}
+                alignItems="center"
+                gap="$2"
+                padding="$8"
+            >
+                <InputField label="Email" value={formData.email} onChange={handleChange('email')} />
+                <InputField label="Password" value={formData.password} onChange={handleChange('password')} secureTextEntry />
+                {error}
+                <Button onPress={onSubmit} style={{ width: '100%' }}>Submit</Button>
+                <Separator alignSelf="stretch" vertical marginHorizontal={15} />
+                <View style={{ width: '100%', textAlign: 'center' }}>
+                    <Text>Forget Your Password?</Text>
+                </View>
+                <View>
+                    <Text onPress={() => setAuthState('signup')} style={{ width: '100%', textAlign: 'center', cursor: 'pointer' }}>
+                        Don't have an account? Signup Here
+                    </Text>
+                </View>
+            </View>
+        </View>
+    </FormCard>
+));
 
 const AuthScreen = () => {
-    const user = useStorage();
-    const [isAuth, setIsAuth] = useState(false);
     const [authState, setAuthState] = useState("signup");
-    const [role, setRole] = useState('user');
-    const [email, setEmail] = useState('');
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const [formData, setFormData] = useState({
+        role: 'user',
+        email: '',
+        name: '',
+        username: '',
+        password: '',
+        confirmPassword: '',
+    });
+    const [error, setError] = useState(null);
 
-    useEffect(() => {
-        setIsAuth(!!user);
-    }, [user]);
+    const handleChange = useCallback((field) => (value) => {
+        setFormData((prevData) => ({ ...prevData, [field]: value }));
+    }, []);
 
-    const signup = (event) => {
-        event.preventDefault(); // Prevent default form submission
-        console.log('Signup event triggered');
-        console.log('Email:', email);
-        console.log('Username:', username);
-        console.log('Password:', password);
-        console.log('Confirm Password:', confirmPassword);
-        console.log('Role:', role);
-        const data = {
-            email,
-            password,
-            username,
-            role
+    const signup = useCallback(async (event) => {
+        event.preventDefault(); // Prevent form submission from reloading the page
+        const response = await useSignup(formData);
+        if (response) {
+            setError(<Text>{response}</Text>);
         }
-        const response = useLogin(data);
-        
-    };
+    }, [formData]);
 
-    const SignupForm = () => {
-        return (
-            <FormCard>
-                <View style={{ width: '100%' }}>
-                    <Form
-                        width={'100%'}
-                        borderWidth={1}
-                        borderRadius={30}
-                        alignItems="center"
-                        gap="$2"
-                        padding="$8"
-                        onSubmit={signup}
-                    >
-                        <Text style={{ width: '100%', textAlign: 'left' }}>Email</Text>
-                        <Input 
-                            style={{ width: '100%' }} 
-                            value={email} 
-                            onChangeText={setEmail} // Directly use the setter function
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                        />
-                        <Text style={{ width: '100%', textAlign: 'left' }}>Username</Text>
-                        <Input 
-                            style={{ width: '100%' }} 
-                            value={username} 
-                            onChangeText={setUsername} // Directly use the setter function
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                        />
-                        <Text style={{ width: '100%', textAlign: 'left' }}>Password</Text>
-                        <Input 
-                            style={{ width: '100%' }} 
-                            value={password} 
-                            onChangeText={setPassword} // Directly use the setter function
-                            secureTextEntry 
-                        />
-                        <Text style={{ width: '100%', textAlign: 'left' }}>Confirm Password</Text>
-                        <Input 
-                            style={{ width: '100%' }} 
-                            value={confirmPassword} 
-                            onChangeText={setConfirmPassword} // Directly use the setter function
-                            secureTextEntry 
-                        />
-                        <Text style={{ width: '100%', textAlign: 'left' }}>Role</Text>
-                        <ToggleGroup
-                            type="single"
-                            value={role}
-                            onValueChange={setRole}
-                            style={{
-                                color: 'black',
-                                alignItems: 'center',
-                                justifyContent: 'space-around',
-                                width: '100%'
-                            }}
-                        >
-                            <ToggleGroup.Item style={{ margin: 10 }} value="user">User</ToggleGroup.Item>
-                            <ToggleGroup.Item style={{ margin: 10 }} value="delivery_boy">Delivery Boy</ToggleGroup.Item>
-                            <ToggleGroup.Item style={{ margin: 10 }} value="restaurant">Restaurant</ToggleGroup.Item>
-                        </ToggleGroup>
-                        <Button onPress={signup} style={{ width: '100%' }}>Submit</Button>
-                        <Separator alignSelf="stretch" vertical marginHorizontal={15} />
-                        <Text onPress={() => setAuthState('login')} style={{ width: '100%', textAlign: 'center', cursor: 'pointer' }}>
-                            Already have an account? Login Here
-                        </Text>
-                    </Form>
-                </View>
-            </FormCard>
-        );
-    };
-
-    const LoginForm = () => {
-        return (
-            <FormCard>
-                <View style={{ width: '100%' }}>
-                    <Form
-                        width={'100%'}
-                        borderWidth={1}
-                        borderRadius={30}
-                        alignItems="center"
-                        gap="$2"
-                        padding="$8"
-                    >
-                        <Text style={{ width: '100%', textAlign: 'left' }}>Email</Text>
-                        <Input 
-                            style={{ width: '100%' }} 
-                            value={email} 
-                            onChangeText={setEmail} // Directly use the setter function
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                        />
-                        <Text style={{ width: '100%', textAlign: 'left' }}>Password</Text>
-                        <Input 
-                            style={{ width: '100%' }} 
-                            value={password} 
-                            onChangeText={setPassword} // Directly use the setter function
-                            secureTextEntry 
-                        />
-                        <Button style={{ width: '100%' }}>Submit</Button>
-                        <Separator alignSelf="stretch" vertical marginHorizontal={15} />
-                        <Text onPress={() => setAuthState('signup')} style={{ width: '100%', textAlign: 'center', cursor: 'pointer' }}>
-                            Don't have an account? Signup Here
-                        </Text>
-                    </Form>
-                </View>
-            </FormCard>
-        );
-    };
+    const login = useCallback(async (event) => {
+        event.preventDefault(); // Prevent form submission from reloading the page
+        const data = {
+            email: formData.email,
+            password: formData.password,
+        };
+        const response = await useLogin(data);
+        if (response) {
+            setError(<Text>{response}</Text>);
+        }
+    }, [formData.email, formData.password]);
 
     return (
         <View>
-            {isAuth ? (
-                <Text>This is leading to Dashboard</Text>
-            ) : (
-                <ScrollView style={{ flex: 1, marginTop: 30, marginBottom: 30 }}>
-                    <View style={{ flexDirection: 'column', alignItems: 'center', justifyItems: 'center' }}>
-                        {authState === 'signup' ? <SignupForm /> : <LoginForm />}
-                    </View>
-                </ScrollView>
-            )}
+            <ScrollView style={{ flex: 1, marginTop: 30 }}>
+                <View style={{ flexDirection: 'column', alignItems: 'center', justifyItems: 'center' }}>
+                    {authState === 'signup' ? (
+                        <SignupForm
+                            formData={formData}
+                            handleChange={handleChange}
+                            onSubmit={signup}
+                            setAuthState={setAuthState}
+                            error={error}
+                        />
+                    ) : (
+                        <LoginForm
+                            formData={formData}
+                            handleChange={handleChange}
+                            onSubmit={login}
+                            setAuthState={setAuthState}
+                            error={error}
+                        />
+                    )}
+                </View>
+            </ScrollView>
         </View>
     );
 };

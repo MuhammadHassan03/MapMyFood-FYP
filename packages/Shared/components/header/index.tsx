@@ -5,11 +5,15 @@ import MapMyFoodLogo from 'Shared/assets/pictures/MapMyFoodLogo.png'
 import { HeaderLinks } from 'Shared/constants/hedaerLinks'
 import useResponsive from 'Shared/hooks/useResponsive';
 import Link from 'Shared/components/Link'
+import useAuth from 'Shared/hooks/Auth/useAuth';
 
 
 const Header = () => {
 
+    //TODO Implement Forgot Logic
+
     const { xs, sm, md, lg } = useResponsive();
+    const { user } = useAuth();
     return (
         <View
             style={{
@@ -39,11 +43,19 @@ const Header = () => {
                     justifyContent: 'center'
                 }}>
                     {
-                        HeaderLinks.map((link) => (
-                            <Link href={link.link}><Text key={link.title} style={{ margin: 10, fontSize: xs || sm || md ? 16 : 18 }}>
-                                {link.title}
-                            </Text></Link>
-                        ))
+                        user ? (
+                            HeaderLinks.loggedIn.map((link) => (
+                                <Link href={link.link}><Text key={link.title} style={{ margin: 10, fontSize: xs || sm || md ? 16 : 18 }}>
+                                    {link.title}
+                                </Text></Link>
+                            ))
+                        ) : (
+                            HeaderLinks.loggedOut.map((link) => (
+                                <Link href={link.link}><Text key={link.title} style={{ margin: 10, fontSize: xs || sm || md ? 16 : 18 }}>
+                                    {link.title}
+                                </Text></Link>
+                            ))
+                        )
                     }
                 </View>
             </View>

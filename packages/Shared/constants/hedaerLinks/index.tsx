@@ -1,20 +1,32 @@
-const HeaderLinks = [
-    {
-        title: 'Home',
-        link: '/'
-    },
-    {
-        title: 'About',
-        link: '/about'
-    },
-    {
-        title: 'Login',
-        link: '/auth'
-    },
-    {
-        title: 'Signup',
-        link: '/auth'
-    }
-]
+const HeaderLinks = {
+    loggedIn: [
+        {
+            title: 'Home',
+            link: '/'
+        },
+        {
+            title: 'About',
+            link: '/about'
+        },
+        {
+            title: 'Logout',
+            link: '/'
+        }
+    ],
+    loggedOut: [
+        {
+            title: 'Home',
+            link: '/'
+        },
+        {
+            title: 'About',
+            link: '/about'
+        },
+        {
+            title: 'Signup',
+            link: '/auth'
+        }
+    ]
+};
 
-export {HeaderLinks}
+export { HeaderLinks };

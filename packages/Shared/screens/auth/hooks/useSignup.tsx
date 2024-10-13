@@ -4,24 +4,21 @@ import { APIURL } from 'Shared/constants/API'
 import useStorage from 'Shared/hooks/User/useStorage';
 // import useNavigate  from 'Shared/utils/navigation/useNavigate';
 
-const useLogin = async (data,) => {
+
+const useSignup = async (data,) => {
     const { setToken } = useStorage(); 
     const { API } = APIURL();
     // const navigate = useNavigate();
+
     try {
-        const response = await axios.post(`${API}/auth/login`, data);
-        console.log(response?.data?.message)
-        if(response?.data?.message){
-            return response?.data?.message;
-        }
+        const response = await axios.post(`${API}/auth/signup`, data);
         if (response?.data?.token) {
             setToken(response?.data?.token);
-            return "Login Succed"
-            // navigate('/');
+            // navigate('/')
         }
     } catch (error) {
-        console.error('Login failed:', error);
+        console.error('Signup failed:', error);
     }
 }
 
-export { useLogin }
+export { useSignup }

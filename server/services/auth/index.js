@@ -8,53 +8,77 @@ const generateToken = (id) => {
 };
 
 const signup = async (req, res) => {
-  const { name, username, email, password, role } = req.body;
+  try {
+    const { name, username, email, password, role } = req.body;
 
-  if (!name || !username || !password || !role) {
-    return res.status(400).json({ message: 'Please fill in all fields' });
+    if (!name || !username || !password || !role) {
+      return res.status(400).json({ message: 'Please fill in all fields' });
+    }
+
+    const userExists = await User.findOne({ username });
+    if (userExists) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
+
+    const user = new User({
+      name,
+      username,
+      email,
+      password,
+      role,
+    });
+
+    await user.save();
+
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      token: generateToken(user._id),
+    });
   }
-
-  const userExists = await User.findOne({ username });
-  if (userExists) {
-    return res.status(400).json({ message: 'User already exists' });
+  catch (error) {
+    console.log('error', error?.message)
   }
-
-  const user = new User({
-    name,
-    username,
-    email,
-    password,
-    role,
-  });
-
-  await user.save();
-
-  res.status(201).json({
-    _id: user._id,
-    name: user.name,
-    username: user.username,
-    email: user.email,
-    role: user.role,
-    token: generateToken(user._id),
-  });
 };
 
 const login = async (req, res) => {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  const user = await User.findOne({ email });
-  if (!user || !(await user.matchPassword(password))) {
-    return res.status(401).json({ message: 'Invalid credentials' });
+    const user = await User.findOne({ email });
+    console.log('user', user)
+    if (!user || !(await user.matchPassword(password))) {
+      return res.status(200).json({ message: 'Invalid credentials' });
+    }
+
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      username: user.username,
+      role: user.role,
+      token: generateToken(user._id),
+    });
   }
-
-  res.json({
-    _id: user._id,
-    name: user.name,
-    email: user.email,
-    username: user.username,
-    role: user.role,
-    token: generateToken(user._id),
-  });
+  catch (error) {
+    console.log('error', error?.message)
+  }
 };
 
-module.exports = { signup, login };
+const getMe = (req, res) => {
+  try {
+    const user = req.user;
+    if (user) {
+      res.json(user);
+    }
+    res.json({ user: null })
+  }
+  catch (error) {
+    console.log('error', error?.message)
+  }
+}
+
+module.exports = { signup, login, generateToken, getMe };
