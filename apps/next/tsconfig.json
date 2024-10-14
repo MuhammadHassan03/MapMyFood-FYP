@@ -22,6 +22,6 @@
       "Shared/*": ["../../packages/Shared/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../../packages/Shared/**/*"],
   "exclude": ["node_modules"]
 }
