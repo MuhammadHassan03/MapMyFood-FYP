@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -17,7 +18,6 @@ app.use(cors(corsOptions));
 
 app.options('*', cors(corsOptions));
 
-require('dotenv').config();
 app.use(express.json());
 
 app.get('/', (req, res) => {
