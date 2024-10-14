@@ -1,6 +1,7 @@
 import useStorage from "Shared/hooks/User/useStorage";
 import { useState, useEffect } from "react";
 
+
 const useAuth = () => {
     const { getMe } = useStorage();
     const [user, setUser] = useState(null);

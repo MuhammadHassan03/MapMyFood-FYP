@@ -1,5 +1,5 @@
 import useAuth from "Shared/hooks/Auth/useAuth";
-import { Button, Input, Label, ScrollView, Text, View } from "tamagui"
+import { Avatar, Button, Input, Label, ScrollView, Separator, Text, View } from "tamagui"
 import { FormCard } from 'Shared/screens/auth/components/FormCard';
 
 
@@ -20,8 +20,13 @@ const RestaurantProfile = () => {
                         gap="$2"
                         padding="$8">
                         <View style={{ flexDirection: 'column', gap: 3 }}>
-                            <View>
-
+                            <View style={{ width: '100%', alignItems: 'center', paddingTop: 10, paddingBottom: 30 }}>
+                                <Avatar circular size={'$10'}>
+                                    <Avatar.Image src="http://picsum.photos/200/300" />
+                                </Avatar>
+                            </View>
+                            <View style={{width: '100%'}}>
+                                <Separator alignSelf="stretch" vertical />
                             </View>
                             <View>
                                 <Label>Restaurant Name</Label>

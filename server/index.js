@@ -3,7 +3,8 @@ const app = express();
 const cors = require('cors');
 const connectDB = require('./services/db');
 const { authRouter } = require('./routes/authroutes');
-const { trainRoutes } = require('./routes/trainRoutes')
+const { trainRoutes } = require('./routes/trainRoutes');
+const { restaurantRouter } = require('./routes/restaurantRoutes');
 
 app.use(cors());
 require('dotenv').config()
@@ -18,6 +19,7 @@ app.get('/', (req, res) => {
 connectDB();
 app.use('/api/auth', authRouter);
 app.use('/api/train', trainRoutes);
+app.use('/api/restaurant', restaurantRouter)
 
 const PORT = 8000
 

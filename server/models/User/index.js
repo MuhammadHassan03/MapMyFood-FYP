@@ -52,6 +52,10 @@ const userSchema = new mongoose.Schema({
   vehicleNumber: {
     type: Number,
     unique: true,
+  },
+  menu: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Menu'
   }
 });
 

@@ -1,5 +1,5 @@
 // 'use client'
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Image, Text, View, } from "tamagui"
 import MapMyFoodLogo from 'Shared/assets/pictures/MapMyFoodLogo.png'
 import { HeaderLinks } from 'Shared/constants/hedaerLinks'
@@ -11,7 +11,6 @@ import useStorage from 'Shared/hooks/User/useStorage';
 const Header = () => {
     const { logout } = useStorage();
 
-
     //TODO Implement Forgot Logic
     const handleLogout = () => {
         logout();
@@ -20,6 +19,11 @@ const Header = () => {
 
     const { xs, sm, md, lg } = useResponsive();
     const { user } = useAuth();
+
+    useEffect(() => {
+
+    }, [user])
+    
     return (
         <View
             style={{
