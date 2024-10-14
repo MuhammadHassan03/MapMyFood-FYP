@@ -7,7 +7,7 @@ const { trainRoutes } = require('./routes/trainRoutes');
 const { restaurantRouter } = require('./routes/restaurantRoutes');
 
 const corsOptions = {
-  origin: '*', // Allows all origins
+  origin: '*https://map-my-food.vercel.app', // Allows all origins
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS', // Allow common methods
   allowedHeaders: ['Content-Type', 'Authorization'], // Add other headers if needed
   credentials: true // Include credentials if necessary
