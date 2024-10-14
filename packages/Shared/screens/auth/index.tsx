@@ -3,8 +3,16 @@ import { Button, Input, ScrollView, Separator, Text, ToggleGroup, View } from 't
 import { FormCard } from 'Shared/screens/auth/components/FormCard';
 import { useSignup } from 'Shared/screens/auth/hooks/useSignup';
 import { useLogin } from 'Shared/screens/auth/hooks/useLogin';
+import { GestureResponderEvent } from 'react-native';
 
-const InputField = React.memo(({ label, value, onChange, secureTextEntry }) => (
+interface InputFieldProps {
+    label: string;
+    value: string;
+    onChange: (value: string) => void;
+    secureTextEntry?: boolean;
+}
+
+const InputField: React.FC<InputFieldProps> = React.memo(({ label, value, onChange, secureTextEntry }) => (
     <View style={{ width: '100%' }}>
         <Text style={{ width: '100%', textAlign: 'left' }}>{label}</Text>
         <Input
@@ -18,7 +26,12 @@ const InputField = React.memo(({ label, value, onChange, secureTextEntry }) => (
     </View>
 ));
 
-const RoleToggle = React.memo(({ role, onChange }) => (
+interface RoleToggleProps {
+    role: string;
+    onChange: (value: string) => void;
+}
+
+const RoleToggle: React.FC<RoleToggleProps> = React.memo(({ role, onChange }) => (
     <View style={{ width: '100%' }}>
         <Text style={{ width: '100%', textAlign: 'left' }}>Role</Text>
         <ToggleGroup
@@ -39,10 +52,24 @@ const RoleToggle = React.memo(({ role, onChange }) => (
     </View>
 ));
 
-const SignupForm = React.memo(({ formData, handleChange, onSubmit, setAuthState, error }) => (
+interface SignupFormProps {
+    formData: {
+        role: string;
+        email: string;
+        name: string;
+        username: string;
+        password: string;
+        confirmPassword: string;
+    };
+    handleChange: (field: string) => (value: string) => void;
+    onSubmit: (event: GestureResponderEvent) => void;
+    setAuthState: (state: string) => void;
+    error: JSX.Element | null;
+}
+
+const SignupForm: React.FC<SignupFormProps> = React.memo(({ formData, handleChange, onSubmit, setAuthState, error }) => (
     <FormCard>
         <View style={{ width: '100%' }}>
-            {/* Using View instead of Form to avoid form submission triggering page reload */}
             <View
                 style={{ width: '100%' }}
                 borderWidth={1}
@@ -69,7 +96,18 @@ const SignupForm = React.memo(({ formData, handleChange, onSubmit, setAuthState,
     </FormCard>
 ));
 
-const LoginForm = React.memo(({ formData, handleChange, onSubmit, setAuthState, error }) => (
+interface LoginFormProps {
+    formData: {
+        email: string;
+        password: string;
+    };
+    handleChange: (field: string) => (value: string) => void;
+    onSubmit: (event: GestureResponderEvent) => void;
+    setAuthState: (state: string) => void;
+    error: JSX.Element | null;
+}
+
+const LoginForm: React.FC<LoginFormProps> = React.memo(({ formData, handleChange, onSubmit, setAuthState, error }) => (
     <FormCard>
         <View style={{ width: '100%' }}>
             <View
@@ -98,8 +136,8 @@ const LoginForm = React.memo(({ formData, handleChange, onSubmit, setAuthState, 
     </FormCard>
 ));
 
-const AuthScreen = () => {
-    const [authState, setAuthState] = useState("signup");
+const AuthScreen: React.FC = () => {
+    const [authState, setAuthState] = useState<string>("signup");
     const [formData, setFormData] = useState({
         role: 'user',
         email: '',
@@ -108,28 +146,28 @@ const AuthScreen = () => {
         password: '',
         confirmPassword: '',
     });
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<JSX.Element | null>(null);
 
-    const handleChange = useCallback((field) => (value) => {
+    const handleChange = useCallback((field: string) => (value: string) => {
         setFormData((prevData) => ({ ...prevData, [field]: value }));
     }, []);
 
-    const signup = useCallback(async (event) => {
+    const signup = useCallback(async (event: GestureResponderEvent) => {
         event.preventDefault(); // Prevent form submission from reloading the page
         const response = await useSignup(formData);
-        if (response) {
+        if (response !== undefined && response !== null) {
             setError(<Text>{response}</Text>);
         }
     }, [formData]);
 
-    const login = useCallback(async (event) => {
+    const login = useCallback(async (event: GestureResponderEvent) => {
         event.preventDefault(); // Prevent form submission from reloading the page
         const data = {
             email: formData.email,
             password: formData.password,
         };
         const response = await useLogin(data);
-        if (response) {
+        if (response !== undefined && response !== null) {
             setError(<Text>{response}</Text>);
         }
     }, [formData.email, formData.password]);

@@ -34,7 +34,7 @@ const RestaurantDashboard = () => {
                             data={menusData?.menu}
                             renderItem={(menu) => {
                                 return (
-                                    <MenuCard menudata={menu} />
+                                    <MenuCard menudata={{ menudata: menu }} /> 
                                 )
                             }}
                             keyExtractor={item => item.id}

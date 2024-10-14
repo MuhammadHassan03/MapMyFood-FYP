@@ -2,7 +2,6 @@
 import React from 'react';
 import { Image, Text, View, } from "tamagui"
 import MapMyFoodLogo from 'Shared/assets/pictures/MapMyFoodLogo.png'
-import { HeaderLinks } from 'Shared/constants/hedaerLinks'
 import useResponsive from 'Shared/hooks/useResponsive';
 
 

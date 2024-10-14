@@ -21,7 +21,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/train', trainRoutes);
 app.use('/api/restaurant', restaurantRouter)
 
-const PORT = 8000
+const PORT = 9000
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

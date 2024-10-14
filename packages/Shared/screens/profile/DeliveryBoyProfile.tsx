@@ -1,6 +1,7 @@
 import { Button, Input, Label, ScrollView, Text, View } from "tamagui"
 import useAuth from "Shared/hooks/Auth/useAuth";
 import { FormCard } from "../auth/components/FormCard";
+import React from "react";
 
 const DeliveryBoyProfile = () => {
     const { user } = useAuth();
@@ -40,7 +41,7 @@ const DeliveryBoyProfile = () => {
                         </View>
                         <View>
                             <Label>Age</Label>
-                            <Input style={{ width: '100%' }} value={user?.age} />
+                            <Input style={{ width: '100%' }} value={user?.age ? String(user.age) : undefined} />
                         </View>
                         <View>
                             <Label>Vehicle Type</Label>

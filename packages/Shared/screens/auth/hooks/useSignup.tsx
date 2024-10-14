@@ -5,7 +5,7 @@ import useStorage from 'Shared/hooks/User/useStorage';
 // import useNavigate  from 'Shared/utils/navigation/useNavigate';
 
 
-const useSignup = async (data,) => {
+const useSignup = async (data: any) => {
     const { setToken } = useStorage(); 
     const { API } = APIURL();
     // const navigate = useNavigate();

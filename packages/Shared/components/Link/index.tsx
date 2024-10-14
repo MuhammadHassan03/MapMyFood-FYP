@@ -1,35 +1,35 @@
 import React from 'react';
 import { Text } from 'tamagui';
-import Link, { LinkProps as NextLinkProps } from 'next/link';
 
-interface CustomLinkProps extends NextLinkProps {
-  children: React.ReactNode;
-}
-
-let CustomLink: React.FC<CustomLinkProps>;
-
-if (typeof window !== 'undefined') {
-  const NextLink = require('next/link').default;
-
-  CustomLink = ({ href, children, ...props }) => (
-    <NextLink href={href} {...(props as NextLinkProps)}>
-      <Text>{children}</Text>
-    </NextLink>
-  );
-} else {
-  CustomLink = ({ children }) => (
-    <Text>{children}</Text>
-  );
-}
-
-interface LinkComponentProps {
+interface CustomLinkProps {
   href: string;
   children: React.ReactNode;
-  [key: string]: any;
+  onClick?: () => void;
 }
 
-const LinkComponent: React.FC<LinkComponentProps> = (props) => {
-  return <CustomLink {...props} />;
+const CustomLink: React.FC<CustomLinkProps> = ({ href, children, onClick }) => {
+  if (typeof window !== 'undefined') {
+    const NextLink = require('next/link').default;
+
+    const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+      if (onClick) {
+        event.preventDefault();
+        onClick();
+
+        if (href !== '#') {
+          window.location.href = href;
+        }
+      }
+    };
+
+    return (
+      <NextLink href={href}>
+        <Text>{children}</Text>
+      </NextLink>
+    );
+  }
+
+  return <Text>{children}</Text>;
 };
 
-export default LinkComponent;
+export default CustomLink;

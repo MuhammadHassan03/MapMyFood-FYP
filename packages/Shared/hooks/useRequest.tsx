@@ -1,11 +1,22 @@
 import { useState, useEffect, useCallback } from 'react';
 import { APIURL } from 'Shared/constants/API';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import useStorage from 'Shared/hooks/User/useStorage';
 
-const useRequest = ({ url, method = 'GET', data = null }) => {
-    const [response, setResponse] = useState(null);
-    const [error, setError] = useState(null);
+interface UseRequest {
+    url: string | null;
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE';
+    data?: any; 
+}
+
+
+interface ErrorResponse {
+    message?: string;
+}
+
+const useRequest = ({ url, method = 'GET', data }: UseRequest) => {
+    const [response, setResponse] = useState<any>(null); 
+    const [error, setError] = useState<string>("");
     const [loading, setLoading] = useState(false);
     const { API } = APIURL();
     const { getToken } = useStorage();
@@ -20,7 +31,7 @@ const useRequest = ({ url, method = 'GET', data = null }) => {
 
         try {
             let res;
-            switch (method.toUpperCase()) {
+            switch (method) {
                 case 'GET':
                     console.log('Making GET request to:', `${API}${url}`);
                     res = await axios.get(`${API}${url}`, { headers });
@@ -39,16 +50,19 @@ const useRequest = ({ url, method = 'GET', data = null }) => {
             }
 
             setResponse(res.data);
-        } catch (error) {
-            setError(error.response ? error.response.data : 'Server error');
+        } catch (err) {
+            const error = err as AxiosError<ErrorResponse>;
+            setError(error.response?.data?.message || 'Server error');
         } finally {
             setLoading(false);
         }
     }, [API, url, method, data, token]);
 
     useEffect(() => {
-        makeRequest();  
-    }, [makeRequest]);
+        if (url) {
+            makeRequest();  
+        }
+    }, [makeRequest, url]);
 
     return { response, error, loading, refetch: makeRequest };
 };

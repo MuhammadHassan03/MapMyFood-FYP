@@ -1,6 +1,7 @@
 import { Button, Input, Label, ScrollView, Text, View } from "tamagui"
 import useAuth from "Shared/hooks/Auth/useAuth";
 import { FormCard } from "../auth/components/FormCard";
+import React from "react";
 
 
 const UserProfile = () => {
