@@ -6,7 +6,16 @@ const { authRouter } = require('./routes/authroutes');
 const { trainRoutes } = require('./routes/trainRoutes');
 const { restaurantRouter } = require('./routes/restaurantRoutes');
 
-app.use(cors());
+const corsOptions = {
+  origin: '*', // Allows all origins
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS', // Allow common methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Add other headers if needed
+  credentials: true // Include credentials if necessary
+};
+
+app.use(cors(corsOptions));
+
+app.options('*', cors(corsOptions));
 require('dotenv').config()
 app.use(express.json());
 
