@@ -41,7 +41,7 @@ export function Form({ onClose, isOpen, type }: AlertDialogDemoProps) {
                     </View>
                     <View style={{ paddingTop: 10, paddingBottom: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                         <Label>Publish it now?</Label>
-                        <Switch size="$4" checked={isPublic} onCheckedChange={(checked: Boolean) => setIsPublic(checked)}>
+                        <Switch size="$4" checked={isPublic} onCheckedChange={setIsPublic}>
                             <Switch.Thumb animation="bouncy" />
                         </Switch>
                     </View>
