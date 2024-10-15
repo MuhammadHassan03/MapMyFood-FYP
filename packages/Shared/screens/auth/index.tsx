@@ -4,6 +4,7 @@ import { FormCard } from 'Shared/screens/auth/components/FormCard';
 import { useSignup } from 'Shared/screens/auth/hooks/useSignup';
 import { useLogin } from 'Shared/screens/auth/hooks/useLogin';
 import { GestureResponderEvent } from 'react-native';
+import useNavigate from 'Shared/hooks/useNavigate';
 
 interface InputFieldProps {
     label: string;
@@ -137,6 +138,7 @@ const LoginForm: React.FC<LoginFormProps> = React.memo(({ formData, handleChange
 ));
 
 const AuthScreen: React.FC = () => {
+    const { navigate } = useNavigate();
     const [authState, setAuthState] = useState<string>("signup");
     const [formData, setFormData] = useState({
         role: 'user',
@@ -153,15 +155,16 @@ const AuthScreen: React.FC = () => {
     }, []);
 
     const signup = useCallback(async (event: GestureResponderEvent) => {
-        event.preventDefault(); // Prevent form submission from reloading the page
+        event.preventDefault();
         const response = await useSignup(formData);
         if (response !== undefined && response !== null) {
             setError(<Text>{response}</Text>);
         }
+        navigate('/')
     }, [formData]);
 
     const login = useCallback(async (event: GestureResponderEvent) => {
-        event.preventDefault(); // Prevent form submission from reloading the page
+        event.preventDefault();
         const data = {
             email: formData.email,
             password: formData.password,
@@ -169,6 +172,9 @@ const AuthScreen: React.FC = () => {
         const response = await useLogin(data);
         if (response !== undefined && response !== null) {
             setError(<Text>{response}</Text>);
+            if(response === 'Login Succed'){
+                navigate('/')
+            }
         }
     }, [formData.email, formData.password]);
 

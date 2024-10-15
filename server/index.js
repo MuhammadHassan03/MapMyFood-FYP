@@ -7,6 +7,7 @@ const { authRouter } = require('./routes/authroutes');
 const { trainRoutes } = require('./routes/trainRoutes');
 const { restaurantRouter } = require('./routes/restaurantRoutes');
 
+// Enable Them For Production
 const corsOptions = {
   origin: 'https://map-my-food.vercel.app',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
@@ -18,6 +19,9 @@ app.use(cors(corsOptions));
 
 app.options('*', cors(corsOptions));
 
+
+//Enable Them for Development
+// app.use(cors())
 app.use(express.json());
 
 app.get('/', (req, res) => {

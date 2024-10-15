@@ -1,7 +1,12 @@
 import React from 'react';
 import useAuth from 'Shared/hooks/Auth/useAuth';
 import { Button, Text, View } from 'tamagui'
+import useNavigate from 'Shared/hooks/useNavigate';
+
 const About = () => {
+
+    const {navigate} = useNavigate();
+
     const { user } = useAuth();
     return (
         <View style={{
@@ -24,9 +29,9 @@ const About = () => {
                 </Text>
                 {
                     user ? (
-                        <Button>Dashboard</Button>
+                        <Button onPress={()=> navigate('/')}>Dashboard</Button>
                     ) : (
-                        <Button>Get Started</Button>
+                        <Button onPress={()=> navigate('/')}>Get Started</Button>
                     )
                 }
             </View>

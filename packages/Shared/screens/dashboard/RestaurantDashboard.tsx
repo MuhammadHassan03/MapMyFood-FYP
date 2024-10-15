@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { AlertDialog, Button, ScrollView, Text, View } from "tamagui"
+import { AlertDialog, Button, ScrollView, Spinner, Text, View } from "tamagui"
 import useMenu from "./hooks/useMenu"
 import { FlatList, } from 'react-native';
 import MenuCard from 'Shared/components/menuCard';
@@ -30,7 +30,7 @@ const RestaurantDashboard = () => {
                         <Text onPress={handleShowDialog}>Create</Text>
                     </View>
                     {
-                        loading ? <Text>Loading.....</Text> : <FlatList
+                        loading ? <Spinner size="small" color="$green10" /> : <FlatList
                             data={menusData?.menu}
                             renderItem={(menu) => {
                                 return (
